@@ -13,6 +13,7 @@ export const signup = async (req, res, next) => {
     await newUser.save();
     res.status(201).json("User created successfully");
   } catch (error) {
+    console.log(error);
     // next(errorHandler(550, "error from the function"));
     next(error);
     // res.status(500).json(error.message);
@@ -23,6 +24,7 @@ export const signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const validUser = await User.findOne({ email });
+
     if (!validUser) return next(errorHandler(404, "User not found!"));
     const validPassword = bcryptjs.compareSync(password, validUser.password);
     if (!validPassword) return next(errorHandler(404, "Wrong credentials!"));
