@@ -1,14 +1,21 @@
 import { errorHandler } from "./error.js";
 import jwt from "jsonwebtoken";
 
-export const verifyUser = (req, res, next) => {
-  const token = req.cookies.access - token;
+export const verifyToken = (req, res, next) => {
+  const token = req.cookies.access_token;
+  console.log("TOKEN", token);
+  if (!token) {
+    next(errorHandler(401, "Access denied"));
+    return;
+  }
 
-  if (!token) return next(errorHandler(401, "Access denied"));
-
-  jwt.verify(token, process.env.JWT_Secret, (error, user) => {
-    if (error) return next(errorHandler(403, "Forbidden"));
-
+  jwt.verify(token, process.env.JWT_SECRET, (error, user) => {
+    console.log("user", user);
+    if (error) {
+      next(errorHandler(403, "Forbidden"));
+      console.log(error);
+      return;
+    }
     req.user = user;
     next();
   });
