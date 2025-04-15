@@ -11,6 +11,9 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
 } from "../redux/user/userSlice";
 
 export default function Profile() {
@@ -61,7 +64,6 @@ export default function Profile() {
     e.preventDefault();
 
     try {
-      console.log("Just start");
       dispatch(updateUserStart());
       const res = await fetch(`/api/user/update/${currentUser._id}`, {
         method: "POST",
@@ -70,11 +72,10 @@ export default function Profile() {
         },
         body: JSON.stringify(formData),
       });
-      console.log("RES", res);
+
       const data = await res.json();
-      console.log("DATA", data);
+
       if (data.success === false) {
-        console.log("The error", data.message);
         dispatch(updateUserFailure(data.message));
         return;
       }
@@ -85,27 +86,20 @@ export default function Profile() {
     }
   };
 
-  const handleSubmit222 = async (e) => {
-    e.preventDefault();
+  const handleDeleteUser = async () => {
     try {
-      dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      dispatch(deleteUserStart());
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
       });
       const data = await res.json();
       if (data.success === false) {
-        dispatch(updateUserFailure(data.message));
+        dispatch(deleteUserFailure(data.message));
         return;
       }
-
-      dispatch(updateUserSuccess(data));
-      setUpdateSuccess(true);
+      dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(updateUserFailure(error.message));
+      dispatch(deleteUserFailure(error.message));
     }
   };
 
@@ -171,7 +165,12 @@ export default function Profile() {
         </button>
       </form>
       <div className="flex justify-between mt-5">
-        <span className="text-red-700 cursor-pointer">Delete Account</span>
+        <span
+          onClick={handleDeleteUser}
+          className="text-red-700 cursor-pointer"
+        >
+          Delete Account
+        </span>
         <span className="text-red-700 cursor-pointer">Sign Out</span>
       </div>
       <p className="text-red-700 mt-5">{error ? { error } : ""}</p>
