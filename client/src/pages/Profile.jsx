@@ -18,6 +18,7 @@ import {
   signoutUserFailure,
   signoutUserSuccess,
 } from "../redux/user/userSlice";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -182,6 +183,12 @@ export default function Profile() {
         >
           {loading ? "Loading..." : "Update"}
         </button>
+        <Link
+          to={"/create-listing"}
+          className="uppercase bg-green-700 text-white rounded-lg p-3 text-center hover:opacity-95 disabled:opacity-80"
+        >
+          Create listing
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
         <span
