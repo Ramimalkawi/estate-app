@@ -244,43 +244,47 @@ export default function Profile() {
       <p className="text-red-700 mt-5">
         {showListingsError ? "Error showing listings" : ""}
       </p>
-      <div className="">
-        <h1 className="text-center my-7 text-2xl font-semibold">
-          Your Listings
-        </h1>
-        {userListings &&
-          userListings.length > 0 &&
-          userListings.map((listing) => (
-            <div
-              className="flex p-3 items-center justify-between border rounded-lg border-amber-50 bg-white"
-              key={listing._id}
-            >
-              <Link to={`/listing/${listing._id}`}>
-                <img
-                  className="w-16 h-16 object-contain"
-                  src={listing.imageUrls[0]}
-                  alt="listing cover"
-                />
-              </Link>
-              <Link to={`/listing/${listing._id}`}>
-                <p className="text-slate-700 font-semibold hover:underline truncate">
-                  {listing.name}
-                </p>
-              </Link>
-              <div className="flex flex-col">
-                <button
-                  onClick={() => handleDeleteListing(listing._id)}
-                  className="text-red-700 uppercase"
+      {userListings && userListings.length > 0 && (
+        <div>
+          <h1 className="text-center my-7 text-2xl font-semibold">
+            Your Listings
+          </h1>
+          <div>
+            {userListings.map((listing) => (
+              <div
+                className="flex p-3 items-center justify-between border rounded-lg border-amber-50 bg-white"
+                key={listing._id}
+              >
+                <Link
+                  className="flex items-center gap-2"
+                  to={`/listing/${listing._id}`}
                 >
-                  Delete
-                </button>
-                <Link to={`/update-listing/${listing._id}`}>
-                  <button className="text-green-700 uppercase">Edit</button>
+                  <img
+                    className="w-16 h-16 object-contain"
+                    src={listing.imageUrls[0]}
+                    alt="listing cover"
+                  />
+                  <p className="text-slate-700 font-semibold hover:underline truncate">
+                    {listing.name}
+                  </p>
                 </Link>
+
+                <div className="flex flex-col">
+                  <button
+                    onClick={() => handleDeleteListing(listing._id)}
+                    className="text-red-700 uppercase"
+                  >
+                    Delete
+                  </button>
+                  <Link to={`/update-listing/${listing._id}`}>
+                    <button className="text-green-700 uppercase">Edit</button>
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
-      </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

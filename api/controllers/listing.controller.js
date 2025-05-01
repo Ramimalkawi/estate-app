@@ -76,18 +76,18 @@ export const getListings = async (req, res, next) => {
     }
 
     let furnished = req.query.furnished;
-    if (furnished === undefined || furnished === false) {
+    if (furnished === undefined || furnished === "false") {
       furnished = { $in: [false, true] };
     }
 
     let parking = req.query.parking;
-    if (parking === undefined || parking === false) {
+    if (parking === undefined || parking === "false") {
       parking = { $in: [false, true] };
     }
 
     let type = req.query.type;
     if (type === undefined || type === "all") {
-      type = { $in: ["sell", "rent"] };
+      type = { $in: ["sale", "rent"] };
     }
 
     const searchTerm = req.query.searchTerm || "";

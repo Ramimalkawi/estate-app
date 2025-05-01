@@ -80,7 +80,6 @@ export default function CreateListing() {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Uplaod progress %", progress);
         },
         (error) => {
           reject(error);
@@ -95,7 +94,7 @@ export default function CreateListing() {
   };
 
   const handleChange = (e) => {
-    if (e.target.id === "sell" || e.target.id === "rent") {
+    if (e.target.id === "sale" || e.target.id === "rent") {
       setFormData({ ...formData, type: e.target.id });
     }
     if (
@@ -118,8 +117,14 @@ export default function CreateListing() {
     e.preventDefault();
 
     try {
-      if (formData.discountPrice > formData.regularPrice)
-        return setError("Discouned price must be less than regular price");
+      if (formData.discountPrice > formData.regularPrice) {
+        console.log("Reg", formData.regularPrice);
+        console.log("Dis", formData.discountPrice);
+        console.log(formData.discountPrice - formData.regularPrice);
+        setError("Discouned price must be less than regular price");
+        return;
+      }
+
       if (formData.imageUrls.length < 1)
         return setError("You must upload 1 image at least");
       setError(false);
@@ -182,12 +187,12 @@ export default function CreateListing() {
             <div className="flex gap-2">
               <input
                 type="checkbox"
-                id="sell"
+                id="sale"
                 className="w-5"
                 onChange={handleChange}
-                checked={formData.type === "sell"}
+                checked={formData.type === "sale"}
               />
-              <span>Sell</span>
+              <span>Sale</span>
             </div>
             <div className="flex gap-2">
               <input

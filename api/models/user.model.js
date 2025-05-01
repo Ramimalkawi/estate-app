@@ -18,8 +18,10 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
+      // default:
+      //   "https://lh3.googleusercontent.com/a/ACg8ocIFAbCUVodDEoxaz1kiz3ORcByn_S82ndh4Mwq601E5IOfr8pY=s96-c",
       default:
-        "https://lh3.googleusercontent.com/a/ACg8ocIFAbCUVodDEoxaz1kiz3ORcByn_S82ndh4Mwq601E5IOfr8pY=s96-c",
+        "https://static.vecteezy.com/ti/vecteur-libre/p1/43361860-main-homme-dessine-avatar-profil-icone-pour-social-les-reseaux-forums-et-sortir-ensemble-des-sites-utilisateur-avatar-profil-espace-reserve-anonyme-utilisateur-homme-non-photo-la-toile-modele-defaut-utilisateur-image-profil-masculin-symbole-gratuit-vectoriel.jpg",
     },
   },
   { timestamps: true }
